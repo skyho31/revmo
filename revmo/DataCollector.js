@@ -44,15 +44,27 @@ class DataCollector {
   }
 
   start() {
+    let me = this;
     console.log('[Data Collector] Start Process'.yellow);
 
     this.makeCurrencyInfo().then(() => {
-      this.countDown();
       this.checkTicker();
       this.checkStatus();
+    }).then(() => {
+      setInterval(function(){
+        let now = new Date().getSeconds();
+        readline.clearLine(process.stdout);
+        readline.cursorTo(process.stdout, 0);
+        process.stdout.write(`[Chart Data Loaded] Start Process after ${60 - now} sec`.yellow);  // write text
+      
+        if(now === 0) {
+          readline.clearLine(process.stdout);
+          readline.cursorTo(process.stdout, 0);
+          me.checkTicker();
+          me.checkStatus();
+        }
+      },1000);
     });
-
-    let me = this;
 
     collectEvent.on('chart collected', () => {
       let loadingPercent = (this.requestCount / this.currencyKey.length) * 100;
@@ -70,12 +82,6 @@ class DataCollector {
 
         me.requestCount = 0;
         console.log(`[Data Collected] ${Util.getTime()}`.green);
-        
-        setTimeout(function() {
-          me.countDown();
-          me.checkTicker();
-          me.checkStatus();
-        }, this.intervalTime);
       }
     });
   }
@@ -91,6 +97,8 @@ class DataCollector {
         for (let idx in currencyKey) {
           this.currencyInfo[currencyKey[idx]] = new Currency(currencyKey[idx], currencyInfo[currencyKey[idx]]);
         }
+
+        console.log('[Data Collector] Make Currency Information Process'.yellow);
 
         resolve();
       });
@@ -150,24 +158,6 @@ class DataCollector {
         collectEvent.emit('chart collected');
       }
     });
-  }
-
-  countDown() {
-    let count = this.intervalTime / 1000;
-    let timer = setInterval(function() {    
-      count--;
-      
-      readline.clearLine(process.stdout);
-      readline.cursorTo(process.stdout, 0);
-      process.stdout.write(`next collect : after ${String(count).yellow.underline} sec`);  // write text
-
-      if (count === 0) {
-        readline.clearLine(process.stdout);
-        readline.cursorTo(process.stdout, 0);
-
-        clearTimeout(timer);
-      }
-    }, 1000);
   }
 }
 
