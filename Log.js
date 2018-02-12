@@ -1,5 +1,16 @@
+/**
+ * Log class
+ * 
+ * @author Revine Kim
+ * @version 1.0.0
+ * @since 2018.02.12
+ * 
+ */
+
+// npm modules
 const fs = require('fs');
 
+// default settings
 const defaultPath = './logs/';
 
 class Log {

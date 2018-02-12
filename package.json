@@ -4,7 +4,7 @@
   "description": "",
   "main": "revmo.js",
   "scripts": {
-    "start" : "node revmo"
+    "start": "node revmo"
   },
   "repository": {
     "type": "git",

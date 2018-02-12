@@ -1,3 +1,12 @@
+/**
+ * REVMO - bithumb trader bot
+ * 
+ * @author Revine Kim
+ * @version 1.0.0
+ * @since 2018.02.12
+ * 
+ */
+
 // npm modules
 const readline = require('readline');
 const colors = require('colors');

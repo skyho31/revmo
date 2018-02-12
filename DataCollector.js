@@ -1,4 +1,13 @@
-// npm module
+/**
+ * Data Collector
+ * 
+ * @author Revine Kim
+ * @version 1.0.0
+ * @since 2018.02.12
+ * 
+ */
+
+ // npm module
 const request = require('request');
 const events = require('events');
 const fs = require('fs');

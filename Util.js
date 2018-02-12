@@ -1,4 +1,13 @@
-class Util {
+/**
+ * Util - simple custom util
+ * 
+ * @author Revine Kim
+ * @version 1.0.0
+ * @since 2018.02.12
+ * 
+ */
+
+ class Util {
   static getTime(){
     let parsedZero = this.prototype.parsedZero;
     let date = new Date();
