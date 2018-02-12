@@ -2,7 +2,7 @@
  * Data Collector
  * 
  * @author Revine Kim
- * @version 1.0.0
+ * @version 1.0.1
  * @since 2018.02.12
  * 
  */
@@ -51,27 +51,15 @@ class DataCollector {
       this.checkTicker();
       this.checkStatus();
     }).then(() => {
-      setInterval(function(){
-        let now = new Date().getSeconds();
-        readline.clearLine(process.stdout);
-        readline.cursorTo(process.stdout, 0);
-        process.stdout.write(`[Chart Data Loaded] Start Process after ${60 - now} sec`.yellow);  // write text
-      
-        if(now === 0) {
-          readline.clearLine(process.stdout);
-          readline.cursorTo(process.stdout, 0);
+      Util.setIntervalMsg('Chart Data Loaded', () => {
           me.checkTicker();
           me.checkStatus();
-        }
-      },1000);
+      });
     });
 
     collectEvent.on('chart collected', () => {
       let loadingPercent = (this.requestCount / this.currencyKey.length) * 100;
-
-      readline.clearLine(process.stdout);
-      readline.cursorTo(process.stdout, 0);
-      process.stdout.write(`[Chart Data Loaded] : ${loadingPercent === 100 ? 'completed' : loadingPercent.toFixed(2) + '%'}`.yellow + ' / ');
+      Util.write(`[Chart Data Loaded] : ${loadingPercent === 100 ? 'completed' : loadingPercent.toFixed(2) + '%'}`.yellow + ' / ');
 
       if (this.requestCount === this.currencyKey.length) {
         let currencyInfo = me.currencyInfo;
@@ -152,10 +140,8 @@ class DataCollector {
         this.requestCount++;
         collectEvent.emit('chart collected');
       } catch (e) {
-        console.log('[DataCollector] request failed '.red + key);
-
-        this.requestCount++;
-        collectEvent.emit('chart collected');
+        console.log('[DataCollector] request failed && retry '.red + key );
+        checkChart(key);
       }
     });
   }

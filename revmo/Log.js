@@ -33,7 +33,7 @@ class Log {
     let isExisted = fs.existsSync(filePath);
 
     try {
-      return isAppended ? (isExisted ? fs.appendFileSync(filePath, parsedMessage) : fs.writeFileSync(filePath, parsedMessage)) : fs.writeFileSync(filePath, parsedMessage);
+      return isAppended ? isExisted ? fs.appendFileSync(filePath, parsedMessage) : fs.writeFileSync(filePath, parsedMessage) : fs.writeFileSync(filePath, parsedMessage);
     } catch(e){
       console.log('[log.write] This file is not JSON format. ' + e);
       return false;
