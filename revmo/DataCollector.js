@@ -55,11 +55,11 @@ class DataCollector {
     let me = this;
 
     collectEvent.on('chart collected', () => {
-      let loadingPercent = ((this.requestCount / this.currencyKey.length) -1) * 100;
+      let loadingPercent = (this.requestCount / this.currencyKey.length) * 100;
 
       readline.clearLine(process.stdout);
       readline.cursorTo(process.stdout, 0);
-      process.stdout.write(`Data Loaded : ${loadingPercent.toFixed(2)}% `.yellow);
+      process.stdout.write(`[Chart Data Loaded] : ${loadingPercent === 100 ? 'completed' : loadingPercent.toFixed(2) + '%'}`.yellow + ' / ');
 
       if (this.requestCount === this.currencyKey.length) {
         let currencyInfo = me.currencyInfo;
