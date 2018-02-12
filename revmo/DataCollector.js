@@ -59,7 +59,7 @@ class DataCollector {
 
       readline.clearLine(process.stdout);
       readline.cursorTo(process.stdout, 0);
-      process.stdout.write(`Data Loaded : ${loadingPercent.toFixed}% `.yellow);
+      process.stdout.write(`Data Loaded : ${loadingPercent.toFixed(2)}% `.yellow);
 
       if (this.requestCount === this.currencyKey.length) {
         let currencyInfo = me.currencyInfo;
