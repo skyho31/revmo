@@ -35,7 +35,7 @@ class DataCollector {
   }
 
   start() {
-    console.log('[DataCollector] Process start');
+    console.log('[Data Collector] Start Process'.yellow);
 
     this.makeCurrencyInfo().then(() => {
       this.countDown();
@@ -46,7 +46,7 @@ class DataCollector {
     let me = this;
 
     collectEvent.on('chart collected', () => {
-      if (this.requestCount === this.currencyKey.length) {
+      if (this.requestCount >= this.currencyKey.length) {
         let currencyInfo = me.currencyInfo;
         let date = new Date();
         for (var key in currencyInfo) {
@@ -86,6 +86,8 @@ class DataCollector {
     request(url.ticker, (err, res, body) => {
       if (err) {
         console.log('ticker load failed : ' + err);
+        this.requestCount++;
+        return false;
       }
 
       let result = JSON.parse(body);

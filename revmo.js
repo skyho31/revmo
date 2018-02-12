@@ -19,6 +19,7 @@ let startZero = setInterval(function(){
   if(now === 0) {
     readline.clearLine(process.stdout);
     readline.cursorTo(process.stdout, 0);
+    console.log(`[REVMO] Start Process`.yellow);
     collector.start();
 
     clearTimeout(startZero);  
