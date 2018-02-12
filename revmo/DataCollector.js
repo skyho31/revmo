@@ -55,7 +55,7 @@ class DataCollector {
     let me = this;
 
     collectEvent.on('chart collected', () => {
-      if (this.requestCount >= this.currencyKey.length) {
+      if (this.requestCount === this.currencyKey.length) {
         let currencyInfo = me.currencyInfo;
         let date = new Date();
         for (var key in currencyInfo) {
@@ -116,8 +116,11 @@ class DataCollector {
 
   checkStatus() {
     let currencyInfo = this.currencyInfo;
+    let i = 0;
     for (let key in currencyInfo) {
+      if(i > 12) break;
       if (currencyInfo.hasOwnProperty(key)) this.checkChart(key);
+      i++;
     }
   }
 
@@ -137,15 +140,14 @@ class DataCollector {
 
         collectEvent.emit('chart collected');
       } catch (e) {
-        console.log('[DataCollector] request failed '.red + key);
-        this.requestCount++;
+        //console.log('[DataCollector] request failed '.red + key);
       }
     });
   }
 
   countDown() {
     let count = this.intervalTime / 1000;
-    let timer = setInterval(function() {
+    let timer = setInterval(function() {    
       count--;
       
       readline.clearLine(process.stdout);

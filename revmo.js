@@ -12,13 +12,13 @@ const readline = require('readline');
 const colors = require('colors');
 
 // custom modules
-const DataCollector = require('./DataCollector');
-const Log = require('./Log');
+const DataCollector = require('./revmo/DataCollector');
+const Log = require('./revmo/Log');
 
+// default settings
 const requestInterval = 60 * 1000;
 
 let collector = new DataCollector(requestInterval);
-
 let startZero = setInterval(function(){
   let now = new Date().getSeconds();
   readline.clearLine(process.stdout);
