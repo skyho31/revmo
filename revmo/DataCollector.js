@@ -55,6 +55,12 @@ class DataCollector {
     let me = this;
 
     collectEvent.on('chart collected', () => {
+      let loadingPercent = ((this.requestCount / this.currencyKey.length) -1) * 100;
+
+      readline.clearLine(process.stdout);
+      readline.cursorTo(process.stdout, 0);
+      process.stdout.write(`Data Loaded : ${loadingPercent.toFixed}% `.yellow);
+
       if (this.requestCount === this.currencyKey.length) {
         let currencyInfo = me.currencyInfo;
         let date = new Date();
@@ -95,7 +101,6 @@ class DataCollector {
     request(url.ticker, (err, res, body) => {
       if (err) {
         console.log('ticker load failed : ' + err);
-        this.requestCount++;
         return false;
       }
 
@@ -110,7 +115,6 @@ class DataCollector {
         currency.sellPrice = Number(result.data[key].sell_price);
       }
 
-      this.requestCount++;
     });
   }
 
@@ -118,7 +122,7 @@ class DataCollector {
     let currencyInfo = this.currencyInfo;
     let i = 0;
     for (let key in currencyInfo) {
-      if(i > 12) break;
+      if(i > this.currencyKey.length) break;
       if (currencyInfo.hasOwnProperty(key)) this.checkChart(key);
       i++;
     }
@@ -136,11 +140,14 @@ class DataCollector {
         let currency = this.currencyInfo[key];
 
         currency.chart = result;
+        
         this.requestCount++;
-
         collectEvent.emit('chart collected');
       } catch (e) {
-        //console.log('[DataCollector] request failed '.red + key);
+        console.log('[DataCollector] request failed '.red + key);
+
+        this.requestCount++;
+        collectEvent.emit('chart collected');
       }
     });
   }
