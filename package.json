@@ -1,0 +1,26 @@
+{
+  "name": "revmo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "revmo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skyho31/revmo.git"
+  },
+  "author": "revine kim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skyho31/revmo/issues"
+  },
+  "homepage": "https://github.com/skyho31/revmo#readme",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}
