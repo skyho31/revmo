@@ -2,7 +2,7 @@
  * Data Collector
  * 
  * @author Revine Kim
- * @version 1.0.1
+ * @version 1.0.2
  * @since 2018.02.12
  * 
  */
@@ -125,8 +125,18 @@ class DataCollector {
   }
 
   checkChart(key) {
-    let chartUrl = url.chart.replace('{coinName}', key);
     const TYPE = ['timestamp', 'startPrice', 'endPrice', 'highPrice', 'lowPrice', 'strLength'];
+    let me = this;
+    let chartUrl = url.chart.replace('{coinName}', key);
+    let returnObj = {
+      [TYPE[0]] : [],
+      [TYPE[1]] : [],
+      [TYPE[2]] : [],
+      [TYPE[3]] : [],
+      [TYPE[4]] : [],
+      [TYPE[5]] : []
+    };
+
 
     request(chartUrl, (err, res, body) => {
       if (err) console.log(`[${key} chart request] : failed `.red + err);
@@ -135,13 +145,19 @@ class DataCollector {
         let result = JSON.parse(body);
         let currency = this.currencyInfo[key];
 
-        currency.chart = result;
+
+        result.forEach(data => {
+          for(let idx = 0; idx < TYPE.length; idx++){
+            returnObj[TYPE[idx]].push(data[idx]);
+          }
+        });
+
+        currency.chart = returnObj;
         
         this.requestCount++;
         collectEvent.emit('chart collected');
       } catch (e) {
-        console.log('[DataCollector] request failed && retry '.red + key );
-        checkChart(key);
+        me.checkChart(key);
       }
     });
   }

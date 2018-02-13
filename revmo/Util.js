@@ -57,6 +57,17 @@
     readline.clearLine(process.stdout);
     readline.cursorTo(process.stdout, 0);
   }
+
+  // for bithumb minimum trade unit
+  static parseDecimal(num){
+    if (num == 0) return 0;
+    
+    let str = String(num);
+    let arr = str.split('.');
+    arr[1] = arr[1].slice(0, 4);
+    
+    return Number(arr.join('.'));
+  }
 }
 
 module.exports = Util;
