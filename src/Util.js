@@ -68,6 +68,10 @@
     
     return Number(arr.join('.'));
   }
+
+  static getPercent(targetValue, baseValue){
+    return (((targetValue / baseValue) - 1) * 100).toFixed(2);
+  }
 }
 
 module.exports = Util;

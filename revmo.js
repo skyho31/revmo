@@ -12,9 +12,9 @@ const readline = require('readline');
 const colors = require('colors');
 
 // custom modules
-const DataCollector = require('./revmo/DataCollector');
-const Log = require('./revmo/Log');
-const Util = require('./revmo/Util');
+const DataCollector = require('./src/DataCollector');
+const Log = require('./src/Log');
+const Util = require('./src/Util');
 
 // default settings
 const requestInterval = 60 * 1000;

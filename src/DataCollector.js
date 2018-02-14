@@ -145,7 +145,6 @@ class DataCollector {
         let result = JSON.parse(body);
         let currency = this.currencyInfo[key];
 
-
         result.forEach(data => {
           for(let idx = 0; idx < TYPE.length; idx++){
             returnObj[TYPE[idx]].push(data[idx]);
